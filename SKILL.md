@@ -1,6 +1,6 @@
 ---
 name: dachuang
-description: Generate and manage Chinese College Students' Innovation and Entrepreneurship Training Program (大创) materials across the full project lifecycle, including topic ideation, feasibility analysis, proposal/opening report, application form, progress plan, process logs, midterm report, final report, defense PPT outline, achievement packaging, budget tables, and replacement checklists. Use when the user asks for 大创选题、大创申报书、开题报告、中期报告、结题报告、答辩材料、项目进度管理、成果包装, or a full practice/example 大创 report; may browse the web for current background research when needed.
+description: Generate and manage Chinese College Students' Innovation and Entrepreneurship Training Program (大创) materials across the full project lifecycle, including topic ideation, feasibility scoring, proposal/opening report, application form, progress plan, process logs, midterm report, final report, defense PPT outline, achievement packaging, optional AI image generation, budget tables, consistency checks, AI-tone reduction, and replacement checklists. Use when the user asks for 大创选题、大创申报书、开题报告、中期报告、结题报告、答辩材料、项目进度管理、成果包装, 降AI味, 大创配图, or a full practice/example 大创 report; may browse the web for current background research when needed.
 ---
 
 # Dachuang Report Generator
@@ -47,19 +47,41 @@ For full-lifecycle requests, detailed checklists, stage deliverables, defense ou
 7. Select or recommend one title and generate the requested materials.
 8. For full-lifecycle work, include stage deliverables, task ownership, timeline, budget, risk register, process evidence list, acceptance criteria, and final replacement checklist.
 9. Include a short replacement checklist for names, college, teacher, budget details, actual progress, and real data.
+10. When the user asks to polish, humanize, 降AI味, 去模板化, or make the material more like a student team wrote it, preserve factual boundaries and rewrite with concrete project details, varied sentence length, fewer slogans, and school-form-friendly wording.
 
 ## Capability Modules
 
 Use only the modules relevant to the user's request:
 
 - `选题策划`: generate titles, application scenarios, discipline fit, feasibility, innovation points, and risk level.
+- `选题评分与避坑`: score candidate topics by application value, innovation, feasibility, data availability, display effect, budget fit, output potential, and defense risk.
 - `申报与开题`: generate application form fields, opening report, literature/status summary, technical route, budget, team division, and expected outcomes.
+- `评审视角审查`: review drafts from a teacher/reviewer perspective, flag empty slogans, overlarge scope, weak evidence, vague innovation, inconsistent budget, and unbelievable outcomes.
 - `项目执行`: generate monthly plan, meeting minutes, research logs, experiment plan, data collection sheet, risk register, and adjustment records.
+- `过程材料补档`: generate compliant catch-up templates for missing process records based on real progress; never invent real dates, signatures, photos, receipts, or completed evidence.
 - `中期检查`: generate progress summary, completed work, interim data, problems, corrective actions, updated schedule, and next-stage plan.
+- `危机处理`: when the project is behind schedule or incomplete, produce truthful wording for completed work, problems, scope reduction, remedial plan, and next-stage acceptance criteria.
 - `结题验收`: generate final report, technical implementation, test design, result analysis, budget use, limitations, future work, and acceptance checklist.
 - `成果包装`: generate software copyright placeholders, patent disclosure outline, competition entry text, paper/report outline, award placeholder wording, demo script, and evidence list.
+- `成果路线图`: recommend realistic output combinations such as demo, screenshots, test report, software copyright, competition entry, paper/report, patent disclosure, and evidence list by project type.
 - `答辩展示`: generate PPT outline, speaker notes, 3-minute/5-minute scripts, Q&A bank, poster content, and demo flow.
+- `答辩攻防模拟`: simulate reviewer questions and improve answers, especially about innovation, data source, team contribution, budget, feasibility, and real evidence.
+- `可选绘图`: when the user has configured an image API, generate or refine prompts for project cover images, PPT illustrations, scenario diagrams, poster visuals, and non-evidentiary conceptual images.
+- `材料一致性检查`: compare title, members, teacher, budget, timeline, research content, expected outcomes, data labels, and achievement status across materials.
+- `降AI味`: rewrite drafts to reduce generic AI phrasing while keeping the content appropriate for 大创 forms and not adding unsupported facts.
 - `格式转换`: when asked, adapt the same content into 学校表格口吻, Markdown, Word-style headings, PPT outline, or compressed 摘要版.
+
+## Tooling
+
+When local files are available, prefer using repository tools before finalizing long materials:
+
+- `tools/audit_ai_tone.py <file.md>`: scan for generic AI-style phrases, slogan-heavy wording, and weakly grounded sentences.
+- `tools/check_consistency.py <file1.md> [file2.md ...]`: extract common project fields and warn about inconsistent title, budget, teacher, members, dates, placeholder data, and achievement labels.
+- `tools/draw_project_image.py --provider openai|nano-banana2 --prompt prompt.txt --out output.png`: optionally call a user-configured image API to generate non-evidentiary project visuals.
+
+Use tool output as review hints, not as absolute truth. If a tool flags a false positive, explain the judgment briefly and keep the correct wording.
+
+Image generation is optional and disabled unless the user manually configures API credentials. Never ask the user to paste secrets into a report. Prefer environment variables or a local `.env` file that is not committed. Generated images must be labeled as conceptual visuals or design illustrations when used in 大创 materials; do not present AI-generated images as real experiment photos, real fieldwork, real certificates, real screenshots, or completed physical prototypes.
 
 ## Default Full Package
 
@@ -106,6 +128,15 @@ For reference/example drafts, the final report may include simulated tables and 
 - Avoid empty slogans that do not connect to the implementation route.
 - Include research purpose, research content, domestic and international status, innovation points, technical route, schedule, existing foundation, missing conditions, and budget.
 - For a one-year project, use a monthly or quarterly schedule with realistic student workload.
+- Prefer concrete "本项目拟完成..." wording over grand abstract claims. Tie every policy or industry statement back to a module, scene, data source, or deliverable.
+
+### Humanization and AI-tone reduction
+
+- Replace generic phrases like `具有重要意义`, `广阔应用前景`, `极大提升`, `充分体现`, and `有效解决` with specific scenario, user, metric, module, or deliverable language.
+- Vary sentence length and avoid stacking four-character slogans in every sentence.
+- Keep a student-project voice: modest, concrete, and implementation-oriented.
+- Preserve school-form seriousness. Do not make the text casual, joking, or overly literary.
+- Do not "humanize" by adding fake personal experience, fake field visits, fake teacher feedback, fake experiment results, or unverifiable achievements.
 
 ### Midterm report
 
@@ -136,6 +167,15 @@ For reference/example drafts, the final report may include simulated tables and 
 - Make defense materials concise and visual: problem background, solution architecture, innovation, implementation, data,成果, limitations, and future plan.
 - Provide Q&A answers that acknowledge project limitations instead of overclaiming.
 - For demo scripts, include fallback plans in case hardware, network, or model inference fails.
+
+### Optional image generation
+
+- Use generated images only for cover backgrounds, PPT concept illustrations, poster visuals, user-scenario sketches, architecture-style conceptual visuals, and placeholder design drafts.
+- Prefer Mermaid, PlantUML, tables, screenshots, or real project artifacts for technical diagrams and evidence.
+- If an image represents a real system state, use real screenshots or photos. If unavailable, mark the output as `概念示意图` or `占位示意图`.
+- Before calling `tools/draw_project_image.py`, confirm that the user has configured the relevant API key locally.
+- For OpenAI image generation, default to the configured `DACHUANG_OPENAI_IMAGE_MODEL`; if unset, use a current GPT Image model supported by the user's account.
+- For Nano Banana 2 or other third-party providers, use `DACHUANG_NANO_BANANA2_API_URL`, `DACHUANG_NANO_BANANA2_API_KEY`, and `DACHUANG_NANO_BANANA2_MODEL` supplied by the user.
 
 ## Refusal and Redirection
 

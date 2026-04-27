@@ -13,6 +13,7 @@ Use this reference when a request involves more than one stage of a 大创 proje
 | 结题验收 | 证明项目完成并有成果 | 结题报告、测试数据、成果清单、经费总结、证明材料 |
 | 答辩展示 | 把项目讲清楚、讲像样 | PPT提纲、讲稿、演示脚本、Q&A |
 | 成果包装 | 让成果可被评审理解和归档 | 软著材料、专利交底书提纲、竞赛文案、论文/报告摘要 |
+| 可选绘图 | 补充非证据类视觉材料 | 封面图、概念图、场景图、海报图、PPT背景图 |
 
 ## Full Package Outline
 
@@ -39,6 +40,52 @@ Use this table when the user has multiple possible directions:
 | 题目B | 5 | 3 | 3 | 5 | 4 | 3.8 |
 
 Scores are 1-5. Explain the recommendation briefly.
+
+## Topic Pitfall Check
+
+Use this checklist before recommending a topic:
+
+| 维度 | 高风险表现 | 调整建议 |
+|---|---|---|
+| 题目范围 | 同时承诺平台、算法、硬件、产业化 | 缩到一个核心场景和一个可演示闭环 |
+| 数据来源 | 需要大量真实用户或行业数据但没有渠道 | 改为小规模调研、公开数据、台架测试或仿真验证 |
+| 成果落点 | 只写研究意义，没有可交付物 | 明确系统原型、测试报告、截图、视频、软著材料等 |
+| 经费匹配 | 设备昂贵或测试成本超出项目级别 | 改用现有设备、开源硬件、仿真或租借方案 |
+| 答辩风险 | 创新点像套话，无法回答同类系统差异 | 补充对比对象、差异点和可验证指标 |
+
+## Reviewer Audit
+
+When reviewing an existing draft, return findings in this shape:
+
+| 问题位置 | 风险 | 修改建议 |
+|---|---|---|
+| 立项依据第X段 | 只讲政策背景，没有落到项目功能 | 增加具体应用场景、目标用户和系统模块 |
+| 创新点 | 表述过大，像成果宣传 | 改成可验证的2-4个创新点 |
+| 预期成果 | 声称获奖/授权但缺证明 | 改为拟形成/计划申请，并列证明材料 |
+
+## AI-tone Reduction Checklist
+
+Use this when the user asks for 降AI味、去模板化、像学生自己写的、自然一点:
+
+- Delete or rewrite unsupported big claims.
+- Replace abstract adjectives with implementation details.
+- Keep 1-2 policy/background sentences, then quickly move to scene, method, and deliverables.
+- Use modest verbs such as `拟实现`, `计划完成`, `初步验证`, `形成原型`, `整理报告`.
+- Keep all simulated data and placeholder achievements visibly labeled.
+- Do not add fake personal experience, fake interview details, fake teacher comments, or fake dates.
+
+## Consistency Check
+
+Before final packaging, compare these fields across 申报书、开题、中期、结题、PPT:
+
+| 字段 | 检查内容 |
+|---|---|
+| 项目题目 | 是否前后一致，简称是否统一 |
+| 成员与指导老师 | 姓名、学院、分工是否冲突 |
+| 项目周期 | 月份、阶段任务和中期/结题时间是否匹配 |
+| 经费预算 | 总额、分项、已用经费、结余是否能对上 |
+| 研究内容 | 申报承诺和结题完成内容是否能解释差异 |
+| 数据与成果 | 示例数据是否标注，真实成果是否有证明材料 |
 
 ## Process Evidence Templates
 
@@ -159,6 +206,32 @@ Include answers for:
 - 经费主要花在哪里？
 - 如果继续做，下一步怎么改进？
 - 成果是否真实完成，有哪些证明材料？
+
+## Optional Image Generation
+
+Generated visuals can improve PPT, posters, and cover pages, but they must not replace real evidence.
+
+| 用途 | 推荐做法 | 禁止做法 |
+|---|---|---|
+| PPT封面 | 生成项目场景氛围图，标注为视觉背景 | 当作真实项目现场照片 |
+| 项目海报 | 生成概念插图、用户场景、产品渲染风格图 | 伪造成已完成实物或获奖证明 |
+| 架构说明 | 优先用 Mermaid / PlantUML / 手工流程图 | 用模糊插画替代关键技术路线 |
+| 系统展示 | 优先抓真实系统截图 | 用 AI 图冒充真实界面截图 |
+| 方案草图 | 标注 `概念示意图` 或 `占位示意图` | 暗示已完成硬件或现场部署 |
+
+Prompt structure:
+
+```text
+项目类型：XXXX
+应用场景：XXXX
+画面主体：XXXX
+技术元素：XXXX
+用途：PPT封面 / 海报 / 概念示意图 / 答辩背景
+风格：干净、现代、适合高校项目答辩，不要文字水印
+真实性标注：概念示意图，不代表真实实验照片
+```
+
+API configuration is manual. Keep keys in environment variables or a local `.env` file, not in project materials.
 
 ## Acceptance Checklist
 
